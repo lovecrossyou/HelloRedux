@@ -43,7 +43,9 @@
 
     function render() {
         var currentState = store.getState()
-        valueEl.innerHTML = currentState.maxCount.toString()
+        var max = currentState.maxCount
+        var min = currentState.minCount
+        valueEl.innerHTML = max.toString() + ' --> ' + min.toString()
     }
 
     render()
@@ -69,7 +71,7 @@
     document.getElementById('incrementAsync')
         .addEventListener('click', function () {
             setTimeout(function () {
-                store.dispatch({ type: 'INCREMENT' })
+                store.dispatch({ type: 'DECREMENT' })
             }, 1000)
         })
 </script>
