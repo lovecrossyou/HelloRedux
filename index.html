@@ -15,16 +15,24 @@
     </p>
 </div>
 <script>
-    function counterReducer(state, action) {
+    const initialState = {
+        maxCount:100,
+        minCount:1
+    }
+    function counterReducer(state=initialState, action) {
         if (typeof state === 'undefined') {
             return 0
         }
 
         switch (action.type) {
             case 'INCREMENT':
-                return state + 1
+                return Object.assign({},state,{
+                        maxCount:parseInt(state.maxCount) + 1
+                })
             case 'DECREMENT':
-                return state - 1
+                return Object.assign({},state,{
+                    minCount:parseInt(state.minCount) - 1
+                })
             default:
                 return state
         }
@@ -34,7 +42,8 @@
     var valueEl = document.getElementById('value')
 
     function render() {
-        valueEl.innerHTML = store.getState().toString()
+        var currentState = store.getState()
+        valueEl.innerHTML = currentState.maxCount.toString()
     }
 
     render()
@@ -52,7 +61,7 @@
 
     document.getElementById('incrementIfOdd')
         .addEventListener('click', function () {
-            if (store.getState() % 2 !== 0) {
+            if (store.getState().minCount % 2 !== 0) {
                 store.dispatch({ type: 'INCREMENT' })
             }
         })
